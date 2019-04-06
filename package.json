@@ -16,7 +16,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:extension.analyzePackages"
+    "workspaceContains:**/package.json"
   ],
   "main": "./dist/extension.js",
   "contributes": {

@@ -38,3 +38,15 @@ interface IReleaseMap {
   other: IPackage[];
   [key: string]: IPackage[];
 }
+
+/********
+ *
+ * from files
+ *
+ ********/
+interface IJSONFileContents {
+  editor?: import("vscode").TextEditor;
+  rawText: string;
+  dependencies: ReadonlyArray<object>;
+  devDependencies: ReadonlyArray<object>;
+}

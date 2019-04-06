@@ -2,18 +2,17 @@ import { ReleaseType } from "semver";
 import { DecorationOptions, MarkdownString, Range, TextEditor } from "vscode";
 import { cache } from "./cache";
 import decorations from "./decorations";
+import { parsePackageJSONFile } from "./helpers/files";
 import { fetchDependencyData, parseDependencyData } from "./helpers/parsePackages";
 
-export function updateActiveEditor(editor: TextEditor) {
-  if (!editor) {
-    return;
-  }
-  if (!editor.document.fileName.endsWith("package.json")) {
-    return;
-  }
-  const rawText = editor.document.getText();
+export async function updateActiveEditor(defaultEditor?: TextEditor) {
   try {
-    const { dependencies, devDependencies } = JSON.parse(rawText);
+    const { editor, rawText, dependencies, devDependencies } = await parsePackageJSONFile(
+      defaultEditor
+    );
+    if (!editor) {
+      return;
+    }
 
     const promisedVersionList = fetchDependencyData(editor, {
       dependencies,

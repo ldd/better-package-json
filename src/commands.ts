@@ -3,8 +3,12 @@ import { updateActiveEditor } from "./editor";
 import { updatePackages } from "./helpers/updatePackages";
 
 function analyzePackages() {
-  for (const editor of window.visibleTextEditors) {
-    updateActiveEditor(editor);
+  if (window.visibleTextEditors.length > 0) {
+    for (const editor of window.visibleTextEditors) {
+      updateActiveEditor(editor);
+    }
+  } else {
+    updateActiveEditor();
   }
 }
 async function updatePatchedPackages() {

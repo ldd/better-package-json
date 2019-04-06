@@ -1,0 +1,65 @@
+{
+  "name": "better-package-json",
+  "publisher": "ldd-vs-code",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ldd/better-package-json.git"
+  },
+  "license": "MIT",
+  "displayName": "Better package.json",
+  "description": "Improve how you handle dependencies in your package.json file",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.32.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [
+    "onCommand:extension.analyzePackages"
+  ],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "extension.analyzePackages",
+        "title": "Better Packages: Analyze package.json"
+      },
+      {
+        "command": "extension.updatePatchedPackages",
+        "title": "Better Packages: Update patchable packages"
+      },
+      {
+        "command": "extension.updateAllPackages",
+        "title": "Better Packages: Update all packages"
+      }
+    ]
+  },
+  "scripts": {
+    "lint": "tslint  'src/**/*.ts'",
+    "prettify": "prettier  'src/**/*.ts'",
+    "vscode:prepublish": "webpack --mode production",
+    "compile": "webpack --mode none",
+    "watch": "webpack --mode none --watch",
+    "test-compile": "tsc -p ./"
+  },
+  "devDependencies": {
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^10.12.21",
+    "@types/node-fetch": "^2.1.7",
+    "@types/semver": "^6.0.0",
+    "@types/webpack": "^4.4.27",
+    "prettier": "^1.16.4",
+    "ts-loader": "^5.3.3",
+    "tslint": "^5.12.1",
+    "tslint-config-prettier": "^1.18.0",
+    "typescript": "^3.3.1",
+    "vscode": "^1.1.28",
+    "webpack": "^4.29.6",
+    "webpack-cli": "^3.3.0"
+  },
+  "dependencies": {
+    "node-fetch": "^2.3.0",
+    "semver": "^6.0.0"
+  }
+}

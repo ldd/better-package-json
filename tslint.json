@@ -7,8 +7,9 @@
     "curly": true,
     "class-name": true,
     "triple-equals": true,
-
     "no-any": true,
+    "no-implicit-dependencies": [true, ["vscode"]],
+
     "object-literal-sort-keys": false,
     "no-console": false,
     "no-empty": false

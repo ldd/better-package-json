@@ -33,7 +33,28 @@
         "command": "extension.updateAllPackages",
         "title": "Better Packages: Update all packages"
       }
-    ]
+    ],
+    "configuration": {
+      "title": "Better Packages configuration",
+      "properties": {
+        "better-packages.safeMode": {
+          "type": "boolean",
+          "default": true,
+          "description": "make all executed commands just comments (prepends a #)"
+        },
+        "better-packages.semVerRange": {
+          "type": "string",
+          "enum": [
+            "original",
+            "exact",
+            "tilde",
+            "caret"
+          ],
+          "default": "original",
+          "description": "Specifies the semantic version range to use"
+        }
+      }
+    }
   },
   "scripts": {
     "lint": "tslint  'src/**/*.ts'",

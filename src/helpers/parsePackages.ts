@@ -34,7 +34,7 @@ export function fetchDependencyData(
       fetchedData,
       dependencyName,
       dependencyType,
-      dependencyRange: "" + dependencyRange,
+      semanticVersionRange: "" + dependencyRange,
       range
     };
   });
@@ -46,7 +46,7 @@ export async function parseDependencyData(
     fetchedData,
     dependencyName: name,
     dependencyType: type,
-    // dependencyRange,
+    semanticVersionRange,
     range
   }: IFetchingDependency
 ) {
@@ -68,7 +68,7 @@ export async function parseDependencyData(
     const { version: current } = text;
 
     const releaseType = diff(current, latest);
-    return { url, range, current, latest, type, releaseType, name };
+    return { url, range, current, latest, type, releaseType, name, semanticVersionRange };
   } catch (error) {
     throw new NotFoundError("Not Found on Filesystem", [range]);
   }

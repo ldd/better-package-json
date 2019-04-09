@@ -12,7 +12,7 @@ interface IFetchingDependency {
   fetchedData: Promise<import("node-fetch").Response>;
   dependencyName: string;
   dependencyType: DependencyType;
-  dependencyRange: string;
+  semanticVersionRange: string;
   range: import("vscode").Range;
 }
 /********
@@ -25,6 +25,7 @@ type PermissiveReleaseType = import("semver").ReleaseType | null;
 interface IPackage {
   name: string;
   type: DependencyType;
+  semanticVersionRange: string;
   latest: string;
   current: string;
   range?: string;

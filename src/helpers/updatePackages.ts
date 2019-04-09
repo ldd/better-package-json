@@ -8,18 +8,20 @@ workspace.onDidChangeConfiguration(() => {
   config = workspace.getConfiguration("better-packages");
 });
 
+function buildDependencyString({ name, latest, semanticVersionRange }: IPackage): string {
+  return `${name}@${getDependencyRange(semanticVersionRange)}${latest}`;
+}
+
 export async function updatePackages(releaseType?: PermissiveReleaseType) {
   const terminal = window.createTerminal();
   const allDependencies: IPackage[] = cache.get(releaseType);
 
-  const range = getDependencyRange();
-
   const dependencies: string[] = allDependencies
     .filter(({ type }) => type === "default")
-    .map(({ name, latest }) => `${name}@${range}${latest}`);
+    .map(buildDependencyString);
   const devDependencies: string[] = allDependencies
     .filter(({ type }) => type === "development")
-    .map(({ name, latest }) => `${name}@${range}${latest}`);
+    .map(buildDependencyString);
 
   // show terminal if we need to install dependencies
   if (dependencies.length > 0 || devDependencies.length > 0) {
@@ -54,7 +56,7 @@ export async function getInstallTextList(dependencies: string[], devDependencies
       }
     }
   }
-  // if safeMode is enabled, prepend a # to make commands comments
+  // if safeMode is enabled, prepend a # to make commands comments and avoid executing them
   const safeMode: boolean | undefined = config.get("safeMode");
   if (safeMode) {
     commandList = commandList.map(command => `#${command}`);
@@ -63,7 +65,12 @@ export async function getInstallTextList(dependencies: string[], devDependencies
   return commandList;
 }
 
-function getDependencyRange(): string {
+// Some examples to understand this function:
+// "caret": returns "^", will be used as "someName@^3.4.0"
+// "tilde": returns "~", will be used as "someName@~3.4.0"
+// "exact": returns "", will be used as "someName@3.4.0"
+// "original": returns "^","~" or "", will be used as "someName@^3.4.0",etc (based on sem-ver range used in package.json)
+function getDependencyRange(range?: string): string {
   const semVerRange: string = config.get("semVerRange") || "original";
   if (semVerRange === "caret") {
     return "^";
@@ -72,8 +79,17 @@ function getDependencyRange(): string {
   } else if (semVerRange === "exact") {
     return "";
   }
-  // TODO: handle original case
-  else {
-    return "";
+  // handle original case
+  // we peek at the start of semVerRange and use that as our range
+  else if (semVerRange === "original") {
+    if (range && range.length > 0) {
+      if (range[0] === "^") {
+        return "^";
+      }
+      if (range[0] === "~") {
+        return "~";
+      }
+    }
   }
+  return "";
 }

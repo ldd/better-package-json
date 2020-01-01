@@ -68,7 +68,7 @@
     "@types/mocha": "^2.2.42",
     "@types/node": "^10.12.21",
     "@types/node-fetch": "^2.1.7",
-    "@types/semver": "^6.0.0",
+    "@types/semver": "^6.2.0",
     "@types/webpack": "^4.4.27",
     "prettier": "^1.16.4",
     "ts-loader": "^5.3.3",

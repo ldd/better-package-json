@@ -80,7 +80,7 @@
     "webpack-cli": "^3.3.0"
   },
   "dependencies": {
-    "node-fetch": "^2.3.0",
+    "node-fetch": "^2.6.1",
     "semver": "^6.0.0"
   }
 }

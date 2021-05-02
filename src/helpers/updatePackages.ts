@@ -46,7 +46,7 @@ export async function getInstallTextList(dependencies: string[], devDependencies
   }
   // attempt to find a npm lock file
   else {
-    const npmLockFileExists = await hasFile("npm-package-lock.json");
+    const npmLockFileExists = await hasFile("package-lock.json");
     if (npmLockFileExists) {
       if (dependencies.length > 0) {
         commandList = commandList.concat(`npm install ${dependencies.join(" ")} --save`);
